@@ -7,7 +7,7 @@ var http =  require('http')
 var server = http.Server(app)
 
 express()
-  .get('/', (req, res) => {
+  .get('/', function(req, res)  {
     res.send('Hello World!')
   })
 app.listen(PORT, () => {
