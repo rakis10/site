@@ -13,7 +13,10 @@ express()
     res.send('Hello World!')
   })
 app.get("/url", (req, res, next) => {
-    res.json(["Tony","Lisa","Michael","Ginger","Food"]);
+    res.json( {
+      "foo": "sample", 
+      "bar": "sample" 
+  });
    });
 app.listen(PORT, () => {
     console.log(`Example app listening at http://localhost:${PORT}`)
