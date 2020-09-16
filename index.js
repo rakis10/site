@@ -1,7 +1,9 @@
 var PORT =  process.env.PORT || 3000
 var express = require('express')
 var app = express()
+import cors from 'cors';
 
+app.use(cors());
 var http =  require('http')
 
 var server = http.Server(app)
