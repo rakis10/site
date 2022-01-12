@@ -1,70 +1,35 @@
 <template>
   <div class="container" >
     <Hlavicka @showAddTask="toggleAddTask()" title="Rakis" :showAddTask="showAddTask" />
-    <div v-if="showAddTask">
-      <AddTask @addTask="addTask" />
-    </div>
-
-    <Tasks @toggle-reminder="toggleReminder"   @delete-task="deleteTask" :tasks="tasks"/>
+<!--    Router vie poslat data do view , zachyti props-->
+    <router-view :showAddTask="showAddTask" ></router-view>
+    <Footer/>
   </div>
 
 </template>
-
+<!--nezabudni na NPM RUN BUILD-->
 <script>
 import Hlavicka from "@/components/Hlavicka";
 import Tasks from "@/components/Tasks";
 import AddTask from "@/components/AddTask";
+import Footer from "@/components/Footer";
 export default {
   name: 'App',
   components: {
-    AddTask,
+    Footer,
     Hlavicka,
-    Tasks
   },
   data(){
     return{
-      // tu sa robia rest call
-      tasks: [],
       showAddTask: false
     }
   },
   methods:{
-    deleteTask(id){
-      if (confirm('Isto?')){
-        this.tasks = this.tasks.filter((task) => task.id !== id)
-      }
-    },
-    toggleReminder(id){
-      this.tasks = this.tasks.map((task)=> task.id === id ? {...task, reminder: !task.reminder} : task)
-    },
-    addTask(task){
-      // this.tasks.push(task)
-      this.tasks = [...this.tasks, task]
-    },
-    toggleAddTask(){
-      this.showAddTask =  !this.showAddTask
+    toggleAddTask() {
+      this.showAddTask = !this.showAddTask
     }
-
-  },
-  created() {
-    this.tasks = [
-      {
-        id:1,
-        text: 'has',
-        day: 'pondelok',
-        reminder: true
-      },
-      {
-        id:2,
-        text: 'has jas',
-        day: 'pondelok',
-        reminder: true
-      }
-
-    ]
-
-
   }
+
 }
 </script>
 

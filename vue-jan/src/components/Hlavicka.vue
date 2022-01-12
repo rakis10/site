@@ -1,7 +1,11 @@
 <template>
   <header>
       <h1>{{ title }}</h1>
-    <Tlacitko @showAddTask="$emit('showAddTask')" :text="showAddTask ? 'Zavri' : 'Pridaj'" :color="showAddTask ? 'red' : 'green'"/>
+    <Tlacitko
+        v-show="homepage"
+        @showAddTask="$emit('showAddTask')"
+        :text="showAddTask ? 'Zavri' : 'Pridaj'"
+        :color="showAddTask ? 'red' : 'green'"/>
 
 
   </header>
@@ -14,9 +18,21 @@ import Tlacitko from "./Tlacitko";
 
 export default {
   name: "Hlavicka",
-  props: ['title', 'showAddTask'],
+  props: {
+    title: String,
+    showAddTask: Boolean
+    },
   components: {
     Tlacitko
+  },
+  computed:{
+    homepage(){
+      if(this.$route.path === "/"){
+        return true
+      }else {
+        return false
+      }
+    }
   }
 }
 </script>
