@@ -26,7 +26,7 @@ export default {
   methods:{
     async deleteTask(id){
       if (confirm('Isto?')){
-        const res = await fetch(`api/tasks/${id}`, {
+        const res = await fetch(`https://still-dawn-01227.herokuapp.com/tasks/${id}`, {
           method: 'DELETE',
 
         })
@@ -38,7 +38,7 @@ export default {
       const taskNaMenenie = await this.fetchTask(id)
       const meneniTask = {...taskNaMenenie, reminder: !taskNaMenenie.reminder}
 
-      const res = await fetch(`api/tasks/${id}`, {
+      const res = await fetch(`https://still-dawn-01227.herokuapp.com/tasks/${id}`, {
         method: 'PUT',
         headers: {
           'Content-type': 'application/json',
@@ -55,13 +55,13 @@ export default {
       return data
     },
     async fetchTask(id){
-      const res = await fetch(`api/tasks/${id}`)
+      const res = await fetch(`https://still-dawn-01227.herokuapp.com/tasks/${id}`)
       const data = await res.json()
       return data
     },
     async addTask(task){
       // this.tasks.push(task)
-      const res = await fetch('api/tasks', {
+      const res = await fetch('https://still-dawn-01227.herokuapp.com/tasks', {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
