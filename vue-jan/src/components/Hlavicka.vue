@@ -22,6 +22,7 @@ export default {
     title: String,
     showAddTask: Boolean
     },
+
   components: {
     Tlacitko
   },
