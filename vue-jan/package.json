@@ -1,23 +1,24 @@
 {
-  "name": "vue-jan",
-  "version": "0.1.0",
-  "private": true,
+  "name": "fullstack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "start": "node server.js",
-    "backend": "json-server --watch db.json --port 5000"
+    "server": "nodemon server.js --ignore 'client/'",
+    "client": "npm run serve --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "core-js": "^3.6.5",
-    "express": "^4.17.2",
-    "gsap": "^3.9.1",
-    "vue": "^3.0.0",
-    "vue-router": "^4.0.12"
+    "body-parser": "^1.19.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "mongoose": "^6.2.9",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "^3.0.0"
+    "concurrently": "^7.0.0",
+    "nodemon": "^2.0.15"
   }
 }
