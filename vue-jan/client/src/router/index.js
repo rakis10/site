@@ -7,7 +7,7 @@ import Register from "../views/Register";
 import store from "../store";
 
 
-//TODO doplnit meta
+
 const routes = [
     {
         path: '/',

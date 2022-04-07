@@ -11,12 +11,15 @@ import VueAxios from "vue-axios";
 const app = createApp(App).use(router).use(store)
 // Setting up default vue's http modules for api calls
 // app.prototype.$http = axios;
-app.config.globalProperties.$http=axios
+app.config.globalProperties.axios=axios
 // Load the token from the localStorage
 const token = localStorage.getItem("token");
 // Is there is any token then we will simply append default axios authorization headers
 if (token) {
-    app.prototype.$http.defaults.headers.common['Authorization'] = token;
+    // Vue 2
+    // app.prototype.$http.defaults.headers.common['Authorization'] = token;
+    // Vue 3
+    axios.defaults.headers.common['Authorization'] = token;
 }
 
 app.mount('#app')
