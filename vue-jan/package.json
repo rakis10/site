@@ -2,6 +2,9 @@
   "name": "fullstack",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": "12.3.0"
+  },
   "main": "index.js",
   "scripts": {
     "server": "nodemon server.js --ignore 'client/'",
