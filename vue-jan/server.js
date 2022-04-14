@@ -34,13 +34,14 @@ mongoose
 app.use('/api/bucketListItems', bucketListItemRoutes)
 app.use('/api/users',users)
 
+// developing
+// if (process.env.NODE_ENV === 'production') {
+//    app.use(express.static('client/dist'))
+//    app.get('*', (req, res) => {
+//       res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'))
+//    })
+// }
 
-if (process.env.NODE_ENV === 'production') {
-   app.use(express.static('client/dist'))
-   app.get('*', (req, res) => {
-      res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'))
-   })
-}
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));
 })

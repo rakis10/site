@@ -9,6 +9,7 @@
   "scripts": {
     "server": "nodemon server.js --ignore 'client/'",
     "client": "npm run serve --prefix client",
+    "start": "node index.js",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "",

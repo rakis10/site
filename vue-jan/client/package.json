@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "server": "nodemon server.js --prefix 'server/'",
-    "build": "npm run build ",
+    "build": "vue-cli-service build",
     "client": "npm run serve ",
     "dev": "concurrently \"npm run server\" \"npm run client\" "
   },
