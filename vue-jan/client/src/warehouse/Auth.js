@@ -29,7 +29,12 @@ const actions = {
                 }, user) {
         commit('auth_request');
         try {
-            let res = await axios.post('/api/users/login', user)
+            // dev
+            let res = await axios.post('http://localhost:3000/api/users/login', user)
+            // deploy
+            // let res = await axios.post('/api/users/login', user)
+
+
             if (res.data.success) {
                 const token = res.data.token;
                 const user = res.data.user;

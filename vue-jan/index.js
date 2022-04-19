@@ -7,6 +7,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const mongoose = require('mongoose')
 const users = require("./routes/api/users")
+const zasoby = require("./routes/api/zasoby")
 const passport = require('passport')
 
 const bodyParser = require('body-parser')
@@ -26,20 +27,32 @@ require('./config/passport')(passport);
 mongoose
     .connect(mongoUri, {
         useNewUrlParser: true,
-        // useCreateIndex: true,
         useUnifiedTopology: true,
-        // useFindAndModify: false,
     })
     .then(() => console.log('MongoDB database Connected...'))
     .catch((err) => console.log(err))
 
 
 app.use('/api/users',users)
+app.use('/api/zasoby',zasoby)
+
+
+// DEVELOPING
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/dist'))
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'))
+    })
+}
+
+// DEPLOY
 // MAGIC!!!!
-app.use(express.static("public"));
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/index.html'));
-})
+// app.use(express.static("public"));
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'public/index.html'));
+// })
+
+
 app.listen(port,  () => {
     console.log(`Server running at http://localhost:${port}/`);
 });

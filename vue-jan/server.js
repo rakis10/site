@@ -23,9 +23,7 @@ require('./config/passport')(passport);
 mongoose
     .connect(mongoUri, {
        useNewUrlParser: true,
-       // useCreateIndex: true,
        useUnifiedTopology: true,
-       // useFindAndModify: false,
     })
     .then(() => console.log('MongoDB database Connected...'))
     .catch((err) => console.log(err))
@@ -35,19 +33,19 @@ app.use('/api/bucketListItems', bucketListItemRoutes)
 app.use('/api/users',users)
 
 // developing
-// if (process.env.NODE_ENV === 'production') {
-//    app.use(express.static('client/dist'))
-//    app.get('*', (req, res) => {
-//       res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'))
-//    })
-// }
+if (process.env.NODE_ENV === 'production') {
+   app.use(express.static('client/dist'))
+   app.get('*', (req, res) => {
+      res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'))
+   })
+}
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/index.html'));
-})
 // app.get('*', (req, res) => {
-//    res.send("Suc")
-//     // res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'))
+//     res.sendFile(path.join(__dirname, 'clienpublic/index.html'));
+// })
+// app.get('*', (req, res) => {
+//    // res.send("Suc")
+//     res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'))
 // })
 
 app.listen(PORT, () => console.log(`App listening at http://localhost:${PORT}`))
