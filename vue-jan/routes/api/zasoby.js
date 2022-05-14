@@ -18,9 +18,16 @@ router.get('/', passport.authenticate('jwt', {
     Zasoba.find().then(zasoba =>{
         return res.json(zasoba)
     })
-    // return res.json({
-    //     zasoby: 'vela'
-    // });
+});
+// nacitaj zasobu
+router.get('/zasoba', passport.authenticate('jwt', {
+    session: false
+}), (req, res) => {
+    console.log("parameter id " + req.query.id);
+    // HrubkaTyce.find().then(zasoba =>{
+    //     return res.json(zasoba)
+    // })
+    return res.json(req.query.id)
 });
 
 // nacitaj dlzku
@@ -31,9 +38,6 @@ router.get('/dlzka', passport.authenticate('jwt', {
     DlzkaTyce.find().then(zasoba =>{
         return res.json(zasoba)
     })
-    // return res.json({
-    //     zasoby: 'vela'
-    // });
 });
 
 // create pridajDlzku
@@ -101,4 +105,7 @@ router.post('/pridajHrubku', passport.authenticate('jwt', {
         });
     });
 });
+
+
+
 module.exports = router;
