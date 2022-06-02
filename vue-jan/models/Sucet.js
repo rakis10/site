@@ -1,11 +1,23 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const User = require('./User');
+const Zasoba = require('./Zasoba');
+const Objednavka = require('./Objednavka');
 const CisDlzkaTyce = require('./CisDlzkaTyce');
 const CisHrubkaTyce = require('./CisHrubkaTyce');
-const ZasobaSchema = new Schema({
+
+const SucetSchema = new Schema({
     name: {
         type: String,
+        required: true
+    },
+    zasoba: {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: Zasoba,
+    },
+    objednavka: {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: Objednavka,
         required: true
     },
     typDlzka: {
@@ -22,11 +34,12 @@ const ZasobaSchema = new Schema({
         type: String,
         ref: User
     },
-    exportovana: {
+    pozadovanyPocet: {
         type: Number,
-        default: 0
+        required: true
     },
-    pocet: {
+
+    priradenyPocet: {
         type: Number,
         required: true
     },
@@ -36,4 +49,4 @@ const ZasobaSchema = new Schema({
         default: Date.now
     }
 });
-module.exports = Zasoba = mongoose.model('zasoba', ZasobaSchema);
+module.exports = Sucet = mongoose.model('sucet', SucetSchema);

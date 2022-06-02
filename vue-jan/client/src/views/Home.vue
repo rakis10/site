@@ -1,6 +1,38 @@
 <template>
-   <AddTask v-if="showAddTask" @addTask="addTask" />
+<!--   <AddTask v-if="showAddTask" @addTask="addTask" />-->
+  {{zasoby_list}}
+  {{zasoby}}
+  <table class="table">
 
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr v-for="item in zasoby_list">
+      <th scope="row">1</th>
+      <td>{{item._id}}</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+<!--    <tr>-->
+<!--      <th scope="row">2</th>-->
+<!--      <td>Jacob</td>-->
+<!--      <td>Thornton</td>-->
+<!--      <td>@fat</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <th scope="row">3</th>-->
+<!--      <td>Larry</td>-->
+<!--      <td>the Bird</td>-->
+<!--      <td>@twitter</td>-->
+<!--    </tr>-->
+    </tbody>
+  </table>
 
   <Tasks @toggle-reminder="toggleReminder"   @delete-task="deleteTask" :tasks="tasks"/>
 </template>
@@ -8,6 +40,7 @@
 <script>
 import AddTask from "@/components/AddTask";
 import Tasks from "@/components/Tasks";
+import {mapActions, mapGetters, mapState} from "vuex";
 export default {
   name: "Home",
   props: {
@@ -23,63 +56,28 @@ export default {
       tasks: [],
     }
   },
-  methods:{
-    async deleteTask(id){
-      if (confirm('Isto?')){
-        const res = await fetch(`https://still-dawn-01227.herokuapp.com/tasks/${id}`, {
-          method: 'DELETE',
-
-        })
-        res.status === 200 ? (this.tasks = this.tasks.filter((task) => task.id !== id)) : alert('Nepodarilo sa vymazat')
-
-      }
+  computed: {
+    // ...mapState(["zasoby"]),
+    zasoby(){
+      return this.$store.state.zasoby
     },
-    async toggleReminder(id){
-      const taskNaMenenie = await this.fetchTask(id)
-      const meneniTask = {...taskNaMenenie, reminder: !taskNaMenenie.reminder}
+    beforeMount() {
+      this.$store.dispatch('getZasoby' )
 
-      const res = await fetch(`https://still-dawn-01227.herokuapp.com/tasks/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-type': 'application/json',
-
-        },
-        body: JSON.stringify(meneniTask)
-      })
-      const data = await res.json()
-      this.tasks = this.tasks.map((task)=> task.id === id ? {...task, reminder: data.reminder} : task)
-    },
-    async fetchTasks(){
-      const res = await fetch('https://still-dawn-01227.herokuapp.com/tasks')
-      const data = await res.json()
-      return data
-    },
-    async fetchTask(id){
-      const res = await fetch(`https://still-dawn-01227.herokuapp.com/tasks/${id}`)
-      const data = await res.json()
-      return data
-    },
-    async addTask(task){
-      // this.tasks.push(task)
-      const res = await fetch('https://still-dawn-01227.herokuapp.com/tasks', {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-
-        },
-        body: JSON.stringify(task)
-      })
-      const data = await res.json()
-      this.tasks = [...this.tasks, data]
-    },
-    toggleAddTask(){
-      this.showAddTask =  !this.showAddTask
+      // this.nacitajData()
     }
-
+  }  ,
+  methods:{
+    ...mapActions[("getZasoby")],
+     nacitajData(){
+      this.getZasoby()
+    }
   },
   async created() {
-    this.tasks = await this.fetchTasks()
-  }
+    // this.$store.dispatch("getZasoby");
+
+  },
+
 }
 </script>
 

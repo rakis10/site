@@ -15,12 +15,84 @@ router.get('/', passport.authenticate('jwt', {
     session: false
 }), (req, res) => {
 
-    Zasoba.find().then(zasoba =>{
+    Zasoba.find().populate(["typDlzka","typHrubka"]).then(zasoba =>{
         return res.json(zasoba)
     })
-    // return res.json({
-    //     zasoby: 'vela'
-    // });
+
+});
+// zmaz Zasobu
+router.delete('/del', passport.authenticate('jwt', {
+    session: false
+}), (req, res) => {
+    let id = {
+         _id: req.body.id
+    }
+
+    // Zasoba.deleteOne(nova).then(resp =>{
+    //     console.log(resp)
+    //     return res.status(200).json({
+    //         success: true,
+    //         msg: "Zmazane"
+    //     });
+    // }).catch(function (e){
+    //     console.log(e)
+    // })
+    console.log(id)
+    Zasoba.deleteOne(id).then(zasoba =>{
+
+        return  res.status(200).json({
+                    success: true,
+                    msg: "Zmazane"
+                });
+            })
+
+            //
+            //                      alebo 204
+            // return res.status(409).json({
+            //     success: false,
+            //     msg: "fail."
+            // });
+
+
+
+
+
+});
+// pridaj Zasobu
+router.post('/', passport.authenticate('jwt', {
+    session: false
+}), (req, res) => {
+    let {
+        name,
+        zadal,
+        typDlzka,
+        typHrubka,
+        pocet
+    } = req.body
+    console.log("typ dlzkyId" + typDlzka)
+    // ukladame novu
+    let nova = new Zasoba({
+        name,
+        zadal,
+        typDlzka,
+        typHrubka,
+        pocet
+
+    });
+    DlzkaTyce.findOne({
+        _id: typDlzka
+    }).then(dlzka => {
+        if (dlzka) {
+            nova.typDlzka = dlzka._id
+        }
+    })
+    nova.save().then(user => {
+        return res.status(201).json({
+            success: true,
+            msg: "Zasoba pridana."
+        });
+    });
+
 });
 
 // nacitaj dlzku
@@ -31,9 +103,6 @@ router.get('/dlzka', passport.authenticate('jwt', {
     DlzkaTyce.find().then(zasoba =>{
         return res.json(zasoba)
     })
-    // return res.json({
-    //     zasoby: 'vela'
-    // });
 });
 
 // create pridajDlzku
@@ -74,7 +143,7 @@ router.get('/hrubka', passport.authenticate('jwt', {
     })
 });
 
-// create pridajDlzku
+// create pridaj hrubku
 router.post('/pridajHrubku', passport.authenticate('jwt', {
     session: false
 }), (req, res) => {

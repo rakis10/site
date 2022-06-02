@@ -5,6 +5,7 @@ import Profile from "../views/Profile";
 import Login from "../views/Login";
 import Register from "../views/Register";
 import store from "../store";
+import Zasoby from "../views/Zasoby";
 
 
 
@@ -34,6 +35,13 @@ const routes = [
         component: Register,
         meta: {
             requiresGuest: true
+        }
+    },{
+        path: '/zasoby',
+        name: 'Zasoby',
+        component: Zasoby,
+        meta: {
+            requiresAuth: true
         }
     },
 
