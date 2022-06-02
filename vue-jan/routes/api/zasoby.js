@@ -18,6 +18,16 @@ router.get('/', passport.authenticate('jwt', {
     Zasoba.find().populate(["typDlzka","typHrubka"]).then(zasoba =>{
         return res.json(zasoba)
     })
+});
+// nacitaj zasobu
+router.get('/zasoba', passport.authenticate('jwt', {
+    session: false
+}), (req, res) => {
+    console.log("parameter id " + req.query.id);
+    // HrubkaTyce.find().then(zasoba =>{
+    //     return res.json(zasoba)
+    // })
+    return res.json(req.query.id)
 
 });
 // zmaz Zasobu

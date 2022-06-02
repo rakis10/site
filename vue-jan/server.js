@@ -7,6 +7,7 @@ const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const bucketListItemRoutes = require('./routes/api/bucketListItems')
 const users = require("./routes/api/users")
+const zasoby= require("./routes/api/zasoby")
 const path = require('path')
 const passport = require('passport')
 
@@ -31,6 +32,7 @@ mongoose
 
 app.use('/api/bucketListItems', bucketListItemRoutes)
 app.use('/api/users',users)
+app.use('/api/zasoby',zasoby)
 
 // developing
 if (process.env.NODE_ENV === 'production') {
